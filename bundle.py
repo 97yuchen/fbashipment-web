@@ -19,14 +19,12 @@ def read(p):
         return f.read()
 
 def escape_script(s):
-    # ★ 全面转义内联 JS 中可能破坏 HTML 解析的字符序列
-    # 1. </script → 防止提前闭合 script 标签
+    # ★ 全面清理内联 JS 中可能破坏 HTML 解析的内容
+    # 1. 删除所有 <!-- ... --> HTML 注释（xlsx 库中存在，会导致浏览器把后续内容当注释）
+    s = re.sub(r'<!--.*?-->', '', s, flags=re.DOTALL)
+    # 2. </script → 防止提前闭合 script 标签
     s = s.replace("</script", "<\\/script")
-    # 2. <!-- → 防止被 HTML 解析器误认为注释开始（xlsx库中存在！）
-    s = s.replace("<!--", "<\\!--")
-    # 3. --> → 配套转义注释结束符
-    s = s.replace("-->", "--\\>")
-    # 4. ]]> → 防止打破 CDATA / XHTML 解析
+    # 3. ]]> → 防止打破 CDATA / XHTML 解析
     s = s.replace("]]>", "]\\]>")
     return s
 
