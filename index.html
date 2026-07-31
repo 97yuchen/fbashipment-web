@@ -4118,11 +4118,9 @@ const SyncService = {
 
       let changed = false;
 
-      // 更新物流渠道
-      if (log.channel && !shipment.channel) {
-        shipment.channel = log.channel;
-        changed = true;
-      }
+      // ★ 注意：物流商(carrier) 与 发货渠道(channel) 由「物流信息表」负责录入，
+      //    货代匹配只同步签收日期/状态/轨迹/时效/预计送达等，**绝不修改**这两个字段，
+      //    避免覆盖用户在物流信息表中已填的原值。
 
       // 回填实际送仓日期作为签收日期（优先从轨迹文本提取的日期）
       if (log.actualDelivery) {
