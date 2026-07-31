@@ -1,0 +1,11 @@
+{
+  "name": "FBA货件物流同步管理",
+  "short_name": "FBA物流",
+  "description": "亚马逊FBA货件物流同步管理系统 - 支持Excel导入、OCR识别、风险预警",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f5f7fa",
+  "theme_color": "#2b6cb0",
+  "orientation": "any",
+  "icons": []
+}
